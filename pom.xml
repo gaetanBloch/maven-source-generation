@@ -12,6 +12,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.report.outputEncoding>UTF-8</project.report.outputEncoding>
     <java.version>11</java.version>
+    <mapstruct.version>1.4.2.Final</mapstruct.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
   </properties>
@@ -49,6 +50,14 @@
       <version>1.18.18</version>
       <scope>provided</scope>
     </dependency>
+
+    <!--MapStruct-->
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
+      <version>${mapstruct.version}</version>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -90,7 +99,8 @@
         <artifactId>jsonschema2pojo-maven-plugin</artifactId>
         <version>1.0.2</version>
         <configuration>
-          <sourceDirectory>${basedir}/src/main/resources/schema</sourceDirectory>
+          <sourceDirectory>${basedir}/src/main/resources/schema
+          </sourceDirectory>
           <targetPackage>com.gbloch.types</targetPackage>
         </configuration>
         <executions>
@@ -100,6 +110,35 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+
+      <!--MapStruct-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct-processor</artifactId>
+              <version>${mapstruct.version}</version>
+            </path>
+            <!--In order to use MapStruct with Lombok-->
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>1.18.16</version>
+            </path>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok-mapstruct-binding</artifactId>
+              <version>0.2.0</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
       </plugin>
 
     </plugins>

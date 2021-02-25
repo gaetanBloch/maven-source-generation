@@ -1,4 +1,4 @@
-package com.gbloch;
+package com.gbloch.json;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
